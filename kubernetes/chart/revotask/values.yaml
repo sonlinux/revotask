@@ -1,0 +1,8 @@
+realm: prod
+namespace: 'api'
+replicaCount: 1
+restartPolicy: Never
+
+image:
+  repository: alisonmukoma/revotask:latest
+  pullPolicy: Always

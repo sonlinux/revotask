@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: kubernetes/image/Dockerfile
+    #image: "alisonmukoma/revotask:latest"
+    container_name: api
+    restart: on-failure
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./api/:/app/api/
+ 

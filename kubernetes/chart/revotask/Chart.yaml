@@ -1,0 +1,6 @@
+namespace: "api"
+apiVersion: v1
+appVersion: "1.0"
+description: API to say how many days to a users birthday.
+name: revotask
+version: 1

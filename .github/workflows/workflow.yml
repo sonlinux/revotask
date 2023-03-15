@@ -1,0 +1,42 @@
+---
+name: RevoTask Docker Image Build
+
+on:
+  push:
+    branches: [main]
+    
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - closed
+      - labeled
+      - unlabeled
+      - synchronize
+
+jobs:
+  build:
+    runs-on:
+      - "ubuntu-latest"
+    name: 'Build the revotask docker image'
+    environment: default
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+            
+      - name: Build revotask and push to DockerHub t Registry
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: |
+            alisonmukoma/revotask:latest
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}

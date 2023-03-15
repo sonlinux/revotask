@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: revotask
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: revotask
+      environment: {{ .Values.realm }}
+  template:
+    metadata:
+      name: revotask
+      namespace: {{ .Values.namespace }}
+      labels:
+        app: revotask
+        environment: {{ .Values.realm }}
+    spec:
+      containers:
+        - name: api
+          image: "{{ .Values.image.repository }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          resources:
+            requests:
+              memory: "220Mi"
+              cpu: "35m"
+            limits:
+              memory: "512Mi"
+              cpu: "40m"
