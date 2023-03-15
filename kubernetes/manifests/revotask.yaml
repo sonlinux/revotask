@@ -1,0 +1,32 @@
+---
+# Source: revotask/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: revotask
+  namespace: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: revotask
+      environment: prod
+  template:
+    metadata:
+      name: revotask
+      namespace: api
+      labels:
+        app: revotask
+        environment: prod
+    spec:
+      containers:
+        - name: api
+          image: "alisonmukoma/revotask:latest"
+          imagePullPolicy: "Always"
+          resources:
+            requests:
+              memory: "220Mi"
+              cpu: "35m"
+            limits:
+              memory: "512Mi"
+              cpu: "40m"
