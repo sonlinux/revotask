@@ -1,6 +1,6 @@
 # RevoTask
 
-RevoTask (Revolute Task) is a tiny python based API solution for greeting a user based on their number of days to their birthday.
+RevoTask is a tiny python based API solution for greeting a user based on their number of days to their birthday.
 
 ## Deployable on almost any cloud environment
 

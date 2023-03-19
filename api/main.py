@@ -1,6 +1,6 @@
 from datetime import date as DateType
 
-from fastapi import FastAPI, status, HTTPException, Depends, Request
+from fastapi import FastAPI, status, HTTPException, Depends
 from fastapi.responses import RedirectResponse
 
 from sqlalchemy.orm import Session
