@@ -4,3 +4,6 @@ push:
 	@docker push alisonmukoma/revtask:latest
 render:
 	@helm template -f kubernetes/chart/revotask/values.yaml kubernetes/chart/revotask > kubernetes/manifests/revotask.yaml
+
+deploy:
+	@kubectl apply -f kubernetes/manifests/revotask.yaml

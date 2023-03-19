@@ -6,3 +6,5 @@ restartPolicy: Never
 image:
   repository: alisonmukoma/revotask:latest
   pullPolicy: Always
+
+service_port: 8000 # port accessible in browser

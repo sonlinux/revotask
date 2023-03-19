@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: revotask
+  labels:
+    environment: {{ .Values.realm }}
+    app: revotask
+spec:
+  ports:
+    - port: {{ .Values.service_port }}
+      targetPort: 8000
+      name: http
+  selector:
+    app: revotask
+    environment: {{ .Values.realm }}
