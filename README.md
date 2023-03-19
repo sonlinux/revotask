@@ -2,6 +2,10 @@
 
 RevoTask (Revolute Task) is a tiny python based API solution for greeting a user based on their number of days to their birthday.
 
+## Deployable on almost any cloud environment
+
+![plot](./docs/static/generic_architecture.png)
+
 ## How it works
 - A user posts their username with a payload of their birthdate.
 - Based on their birthdate provided, the user is greated with "hello your birthdate is in N days"
