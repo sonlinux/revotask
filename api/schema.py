@@ -1,17 +1,12 @@
-from typing import Union
+from datetime import date as date_type
 
 from pydantic import BaseModel
 
-class UserBase(BaseModel):
+class User(BaseModel):
     username: str
-    birthdate: str
-
-
-class User(UserBase):
-    id: int
-    username: str
-    birthdate: str
+    birthdate: date_type
 
     class Config:
         orm_mode = True
+
 

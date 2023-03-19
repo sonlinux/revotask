@@ -1,6 +1,6 @@
 # RevTask
 
-RevTask (Revolute Task) is a tiny python based API solution for greeting a user based on their number of days to their birthday.
+RevoTask (Revolute Task) is a tiny python based API solution for greeting a user based on their number of days to their birthday.
 
 ## How it works
 - A user posts their username with a payload of their birthdate.
@@ -8,7 +8,7 @@ RevTask (Revolute Task) is a tiny python based API solution for greeting a user 
 - in the case where the birthdate is on the current day, the user is greated with "hello, happy birthday!"
 
 ## GitHub Repository
-The GitHub repository holding the main implementation of this tool and its infrastructure configuration is available at [RevTask](https://github.com/sonlinux/revtask.git)
+The GitHub repository holding the main implementation of this tool and its infrastructure configuration is available at [RevTask](https://github.com/sonlinux/revotask.git)
 
 
 ## Setting Up Local Development Environment

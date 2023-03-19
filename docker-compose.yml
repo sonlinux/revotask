@@ -5,7 +5,7 @@ services:
     build: 
       context: .
       dockerfile: kubernetes/image/Dockerfile
-    #image: "alisonmukoma/revotask:latest"
+    image: "alisonmukoma/revotask:latest"
     container_name: api
     restart: on-failure
     ports:
