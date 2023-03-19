@@ -13,3 +13,11 @@ services:
     volumes:
       - ./api/:/app/api/
  
+  tests:
+    build: 
+      context: .
+      dockerfile: kubernetes/image/Dockerfile
+    image: "alisonmukoma/revotask:latest"
+    command: "pytest api"
+    container_name: tests
+ 
