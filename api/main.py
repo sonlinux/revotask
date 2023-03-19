@@ -1,3 +1,5 @@
+from datetime import date as DateType
+
 from fastapi import FastAPI, status, HTTPException, Depends, Request
 from fastapi.responses import RedirectResponse
 
@@ -22,30 +24,28 @@ async def docs_route():
     return RedirectResponse(url="/redoc")
 
 
-@app.post("/hello", status_code=status.HTTP_201_CREATED)
-def create_user(payload: UserSchema, session: Session = Depends(get_session)):
-    validate_username = has_letters_only(payload.username)
-    validate_date = is_past_date(payload.birthdate)
+@app.post("/hello/{username}", status_code=status.HTTP_204_NO_CONTENT)
+def create_user(username: str, birthdate: DateType, session: Session = Depends(get_session)):
+    validate_username = has_letters_only(username)
+    validate_date = is_past_date(birthdate)
 
     if not (validate_username and validate_date):
-        return "Username must contain letters only and Birthday must be in the past."
+        return "Username must contain letters only and Birthdate must be in the past."
 
-    user_obj = session.query(User).filter(User.username == payload.username).first()
+    user_obj = session.query(User).filter(User.username == username).first()
     if user_obj:
         return {
             user_obj.username: "Username already exists, make sure to pass a unique username ID"
         }
     else:
-        new_user = User(**payload.dict())
+        new_user = User(username=username, birthdate=birthdate)
         session.add(new_user)
         session.commit()
         session.refresh(new_user)
 
-        return {"status": "success", "user": new_user}
 
-
-@app.get("/hello/{username}")
-def get_user(username: str, session: Session = Depends(get_session)):
+@app.get("/hello/{username}", status_code=status.HTTP_200_OK)
+def read_user(username: str, session: Session = Depends(get_session)):
     user_obj = session.query(User).filter(User.username == username).first()
 
     if not user_obj:
@@ -63,29 +63,28 @@ def get_user(username: str, session: Session = Depends(get_session)):
         return f"Hello, {user_obj.username}! Happy birthday!"
 
 
-@app.patch("/hello/{username}")
-def update_user(payload: UserSchema, session: Session = Depends(get_session)):
-    validate_username = has_letters_only(payload.username)
-    validate_date = is_past_date(payload.birthdate)
+@app.patch("/hello/{username}", status_code=status.HTTP_204_NO_CONTENT)
+def update_user(username: str, birthdate: DateType, session: Session = Depends(get_session)):
+    validate_date = is_past_date(birthdate)
 
-    user_query = session.query(User).filter(User.username == payload.username)
+    user_query = session.query(User).filter(User.username == username)
     user_obj = user_query.first()
 
-    if not (validate_username and validate_date):
-        return "Username must contain letters only and Birthday must be in the past."
+    if not validate_date:
+        return "Birthdate must be in the past."
 
     if not user_obj:
         raise HTTPException(
-            status_code=404,
-            detail=f"user item with username {payload.username} not found",
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User item with username `{username}` not found",
         )
 
     else:
+        payload = UserSchema(username=username,birthdate=birthdate)
         update_data = payload.dict(exclude_unset=True)
-        user_query.filter(User.username == payload.username).update(
+        user_query.update(
             update_data, synchronize_session=False
         )
 
         session.commit()
         session.refresh(user_obj)
-        return {"status": "success", "user": user_obj}

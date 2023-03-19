@@ -9,7 +9,7 @@ services:
     container_name: api
     restart: on-failure
     ports:
-      - "8000:8000"
+      - "8080:8000"
     volumes:
       - ./api/:/app/api/
  
