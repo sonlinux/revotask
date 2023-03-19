@@ -24,13 +24,17 @@ async def docs_route():
     return RedirectResponse(url="/redoc")
 
 
-@app.post("/hello/{username}", status_code=status.HTTP_204_NO_CONTENT)
-def create_user(username: str, birthdate: DateType, session: Session = Depends(get_session)):
+@app.post("/hello/{username}")
+def create_user(
+    username: str, birthdate: DateType, session: Session = Depends(get_session)
+):
     validate_username = has_letters_only(username)
     validate_date = is_past_date(birthdate)
 
     if not (validate_username and validate_date):
-        return "Username must contain letters only and Birthdate must be in the past."
+        return {
+            status.HTTP_400_BAD_REQUEST: "Username must contain letters only and Birthdate must be in the past."
+        }
 
     user_obj = session.query(User).filter(User.username == username).first()
     if user_obj:
@@ -42,6 +46,7 @@ def create_user(username: str, birthdate: DateType, session: Session = Depends(g
         session.add(new_user)
         session.commit()
         session.refresh(new_user)
+        return status.HTTP_204_NO_CONTENT
 
 
 @app.get("/hello/{username}", status_code=status.HTTP_200_OK)
@@ -63,8 +68,10 @@ def read_user(username: str, session: Session = Depends(get_session)):
         return f"Hello, {user_obj.username}! Happy birthday!"
 
 
-@app.patch("/hello/{username}", status_code=status.HTTP_204_NO_CONTENT)
-def update_user(username: str, birthdate: DateType, session: Session = Depends(get_session)):
+@app.patch("/hello/{username}")
+def update_user(
+    username: str, birthdate: DateType, session: Session = Depends(get_session)
+):
     validate_date = is_past_date(birthdate)
 
     user_query = session.query(User).filter(User.username == username)
@@ -80,11 +87,10 @@ def update_user(username: str, birthdate: DateType, session: Session = Depends(g
         )
 
     else:
-        payload = UserSchema(username=username,birthdate=birthdate)
+        payload = UserSchema(username=username, birthdate=birthdate)
         update_data = payload.dict(exclude_unset=True)
-        user_query.update(
-            update_data, synchronize_session=False
-        )
+        user_query.update(update_data, synchronize_session=False)
 
         session.commit()
         session.refresh(user_obj)
+        return user_obj
