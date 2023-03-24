@@ -1,4 +1,6 @@
 import pytest
+from datetime import datetime
+
 from api.main import app
 from api.database import get_session
 from api.database import Base
@@ -26,7 +28,7 @@ client = TestClient(app)
 fake_test_db = {
     "staff": {"username": "staff", "birthdate": "1983-06-19"},
     "bad_username": {"username": "test1234", "birthdate": "1984-04-23"},
-    "bad_birthdate": {"username": "unix", "birthdate": "2023-06-23"}, # future and current dates not allowed
+    "bad_birthdate": {"username": "unix", "birthdate": f"{ datetime.today().year + 1 }-06-23"}, # future and current dates not allowed
 }
 
 def test_create_user(test_db):

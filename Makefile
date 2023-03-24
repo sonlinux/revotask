@@ -1,7 +1,7 @@
 build:
-	@docker build --no-cache -t alisonmukoma/revtask:dev -f kubernetes/image/Dockerfile .
+	@docker build --no-cache -t alisonmukoma/revotask:dev -f kubernetes/image/Dockerfile .
 push:
-	@docker push alisonmukoma/revtask:latest
+	@docker push alisonmukoma/revotask:latest
 render:
 	@helm template -f kubernetes/chart/revotask/values.yaml kubernetes/chart/revotask > kubernetes/manifests/revotask.yaml
 
