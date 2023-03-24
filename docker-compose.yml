@@ -19,5 +19,6 @@ services:
       dockerfile: kubernetes/image/Dockerfile
     image: "alisonmukoma/revotask:latest"
     command: "pytest api"
+    restart: on-failure
     container_name: tests
  
