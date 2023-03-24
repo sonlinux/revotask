@@ -39,17 +39,17 @@ $ docker-compose up --build
 
 - To read the API browsable documentation, open the browser at 
 
-```bash
+
 [http://localhost:8000](http://localhost:8000)
-```
+
 
 and
 
 - To interact with the API endpoints in the browser, open 
 
-```bash
+
 [http://localhost:8000/docs](http://localhost:8000/docs)
-```
+
 
 ## Production deployment
 
@@ -86,4 +86,4 @@ make deploy
 
 At this point you should have your kubernetes pod running and your service accessible in the browser at `http://localhost:8000`
 
-Congratulations! :tada
+Congratulations! 🎉
